@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 21:40:13 by ssbaytri         ###   ########.fr       */
+/*   Created: 2024/10/26 10:44:33 by ssbaytri          #+#    #+#             */
+/*   Updated: 2024/11/02 19:04:42 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-#include <sys/wait.h>
-
-# endif
+t_list	*ft_lstlast(t_list *lst)
+{
+	while (lst)
+	{
+		if (!lst->next)
+			return (lst);
+		lst = lst->next;
+	}
+	return (NULL);
+}

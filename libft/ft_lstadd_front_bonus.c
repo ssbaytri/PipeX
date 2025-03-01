@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 21:40:13 by ssbaytri         ###   ########.fr       */
+/*   Created: 2024/10/22 09:31:39 by ssbaytri          #+#    #+#             */
+/*   Updated: 2024/11/02 18:55:24 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-#include <sys/wait.h>
-
-# endif
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (!lst || !new)
+		return ;
+	new->next = *lst;
+	*lst = new;
+}

@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 21:40:13 by ssbaytri         ###   ########.fr       */
+/*   Created: 2024/10/26 19:25:39 by ssbaytri          #+#    #+#             */
+/*   Updated: 2024/11/02 20:49:57 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-#include <sys/wait.h>
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*tmp;
+	t_list	*head;
 
-# endif
+	if (!lst || !del)
+		return ;
+	head = *lst;
+	while (head)
+	{
+		tmp = head->next;
+		del(head->content);
+		free(head);
+		head = tmp;
+	}
+	*lst = NULL;
+}

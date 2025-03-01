@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 21:40:13 by ssbaytri         ###   ########.fr       */
+/*   Created: 2024/10/22 17:32:47 by ssbaytri          #+#    #+#             */
+/*   Updated: 2024/10/31 21:39:30 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-#include <sys/wait.h>
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	len;
+	size_t	i;
 
-# endif
+	len = ft_strlen(src);
+	i = 0;
+	if (size > 0)
+	{
+		while (src[i] && i < size - 1)
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
+	}
+	return (len);
+}

@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 21:40:13 by ssbaytri         ###   ########.fr       */
+/*   Created: 2024/10/21 12:57:51 by ssbaytri          #+#    #+#             */
+/*   Updated: 2024/11/01 18:29:03 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-#include <sys/wait.h>
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
 
-# endif
+	if (n <= 0)
+		return (0);
+	ptr1 = (unsigned char *)s1;
+	ptr2 = (unsigned char *)s2;
+	while (n--)
+	{
+		if (*ptr1 != *ptr2)
+			return (*ptr1 - *ptr2);
+		ptr1++;
+		ptr2++;
+	}
+	return (0);
+}

@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 21:40:13 by ssbaytri         ###   ########.fr       */
+/*   Created: 2024/10/21 12:57:51 by ssbaytri          #+#    #+#             */
+/*   Updated: 2024/10/31 16:35:56 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-#include <sys/wait.h>
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char		*d;
+	const unsigned char	*s;
 
-# endif
+	if (dest == src)
+		return (dest);
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	while (n > 0)
+	{
+		*d++ = *s++;
+		n--;
+	}
+	return (dest);
+}

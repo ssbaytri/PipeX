@@ -1,40 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 22:27:31 by ssbaytri         ###   ########.fr       */
+/*   Created: 2024/10/28 05:34:47 by ssbaytri          #+#    #+#             */
+/*   Updated: 2024/11/03 08:23:12 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void ll()
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	system("leaks pipex");
-}
+	t_list	*head;
+	t_list	*tmp;
+	void	*content;
 
-int main(int ac, char **av)
-{
-	atexit(ll);
-	if (ac != 5)
+	if (!lst || !f || !del)
+		return (NULL);
+	head = NULL;
+	while (lst)
 	{
-		perror("Usage: ./pipex infile cmd1 cmd2 outfile");
-		return (1);
+		content = f(lst->content);
+		tmp = ft_lstnew(content);
+		if (!tmp)
+		{
+			del(content);
+			ft_lstclear(&head, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&head, tmp);
+		lst = lst->next;
 	}
-	// TODO: Iplement the parcing part.
-	printf("infile: %s\n", av[1]);
-	char *line;
-	line = get_next_line(0);
-	while (line)
-	{
-		ft_printf("%s\n", line);
-		free(line);
-		line = get_next_line(0);
-	}
-	free(line);
-	return (0);
+	return (head);
 }
