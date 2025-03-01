@@ -19,7 +19,7 @@ $(LIBFT_A):
 		make -C $(LIBFT_DIR); \
 	fi
 
-%.o: %.c pipex.h
+%.o: %.c ./Mandatory/pipex.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
