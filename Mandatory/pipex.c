@@ -6,33 +6,11 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 23:54:21 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/02 02:57:29 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-
-void	excute_cmd(char *cmd, int infd, int outfd)
-{
-	int pid = fork();
-	if (pid == 0)
-	{
-		dup2(infd, STDIN_FILENO);
-		dup2(outfd, STDOUT_FILENO);
-		execve(cmd, NULL, NULL);
-	}
-	else if (pid > 0)
-	{
-		wait(NULL);
-	}
-	else
-	{
-		perror("Error forking");
-		exit(1);
-	}
-}
-
 
 int main(int ac, char **av)
 {	
