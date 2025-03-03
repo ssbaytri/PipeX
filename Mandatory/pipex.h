@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/02 03:15:22 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/03 04:25:47 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <sys/wait.h>
-# include <strings.h>
+# include <string.h>
 
 # endif
