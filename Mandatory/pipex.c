@@ -6,11 +6,59 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/03 08:35:13 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:06:07 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	free_2d(char **arr)
+{
+	char **tmp;
+
+	tmp = arr;
+	while (*tmp)
+	{
+		free(*tmp);
+		tmp++;
+	}
+	free(arr);
+}
+
+char	*get_envp_path(char *envp[])
+{
+	while (*envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+			return (*envp + 5);
+		envp++;
+	}
+	return (NULL);
+}
+
+char	*cmd_path(char *cmd, char **paths)
+{
+	char *tmp;
+	char *full_path;
+
+	while (*paths)
+	{
+		tmp = ft_strjoin(*paths, "/");
+		full_path = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(full_path, F_OK) == 0)
+			return (full_path);
+		free(full_path);
+		paths++;
+	}
+	return (NULL);
+}
+
+void	parce_args(t_pipex *pipex, char *argv[])
+{
+	pipex->cmd1_args = ft_split(argv[2], ' ');
+	pipex->cmd2_args = ft_split(argv[3], ' ');
+}
 
 int	validate_files(t_pipex *pipex, char *argv[])
 {
@@ -30,15 +78,39 @@ int	validate_files(t_pipex *pipex, char *argv[])
 	return (1);
 }
 
+void	ll()
+{
+	system("leaks pipex");
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
+	// atexit(ll);
 	t_pipex	pipex;
+	char	**paths;
 
-	(void)envp;
 	if (argc == 5)
 	{
 		if (!validate_files(&pipex, argv))
 			return (1);
+		parce_args(&pipex, argv);
+		paths = ft_split(get_envp_path(envp), ':');
+		for (int i = 0; paths[i]; i++)
+			printf("%s\n", paths[i]);
+
+		pipex.cmd1_path = cmd_path(pipex.cmd1_args[0], paths);
+		pipex.cmd2_path = cmd_path(pipex.cmd2_args[0], paths);
+
+		ft_printf("cmd1_path: %s\n", pipex.cmd1_path);
+		ft_printf("cmd2_path: %s\n", pipex.cmd2_path);
+
+		free(pipex.cmd1_path);
+		free(pipex.cmd2_path);
+		free_2d(pipex.cmd1_args);
+		free_2d(pipex.cmd2_args);
+		free_2d(paths);
+		close(pipex.infile_fd);
+		close(pipex.outfile_fd);
 	}
 	else
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2\n", 2);
