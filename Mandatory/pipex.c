@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/03 10:06:07 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/04 00:50:03 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,19 @@ int	validate_files(t_pipex *pipex, char *argv[])
 	return (1);
 }
 
-void	ll()
+void	clean_up(char **paths, t_pipex *pipex)
 {
-	system("leaks pipex");
+	free(pipex->cmd1_path);
+	free(pipex->cmd2_path);
+	free_2d(pipex->cmd1_args);
+	free_2d(pipex->cmd2_args);
+	free_2d(paths);
+	close(pipex->infile_fd);
+	close(pipex->outfile_fd);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	// atexit(ll);
 	t_pipex	pipex;
 	char	**paths;
 
@@ -104,13 +109,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_printf("cmd1_path: %s\n", pipex.cmd1_path);
 		ft_printf("cmd2_path: %s\n", pipex.cmd2_path);
 
-		free(pipex.cmd1_path);
-		free(pipex.cmd2_path);
-		free_2d(pipex.cmd1_args);
-		free_2d(pipex.cmd2_args);
-		free_2d(paths);
-		close(pipex.infile_fd);
-		close(pipex.outfile_fd);
+		clean_up(paths, &pipex);
 	}
 	else
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2\n", 2);
