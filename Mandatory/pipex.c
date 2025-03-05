@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/05 11:27:31 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:51:08 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*cmd_path(char *cmd, char **paths)
 	char	*tmp;
 	char	*full_path;
 
+	if (access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
 	while (*paths)
 	{
 		tmp = ft_strjoin(*paths, "/");
@@ -125,16 +127,11 @@ int	excute(t_pipex *pipex, char *envp[])
 	return (1);
 }
 
-void	ll(void)
-{
-	system("leaks pipex");
-}
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	pipex;
 
-	// atexit(ll);
 	if (argc == 5)
 	{
 		if (!validate_files(&pipex, argv))
