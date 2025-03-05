@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/05 10:34:04 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:21:31 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,6 @@ int check_paths(t_pipex *pipex, char *envp[])
 	pipex->cmd1_path = cmd_path(pipex->cmd1_args[0], paths);
 	pipex->cmd2_path = cmd_path(pipex->cmd2_args[0], paths);
 	free_2d(paths);
-	if (!pipex->cmd1_path)
-		ft_printf("command not found: %s\n", pipex->cmd1_args[0]);
-	if (!pipex->cmd2_path)
-		ft_printf("command not found: %s\n", pipex->cmd2_args[0]);
 	return (1);
 }
 
@@ -109,6 +105,25 @@ void	clean_up(t_pipex *pipex)
 	close(pipex->outfile_fd);
 }
 
+int excute(t_pipex *pipex, char *envp[])
+{
+	if (pipe(pipex->pipe_fd) == -1)
+	{
+		perror("pipe");
+		return (0);
+	}
+	pipex->pid1 = fork();
+	if (pipex->pid1 == 0)
+		child1(pipex, envp);
+	pipex->pid2 = fork();
+	if (pipex->pid2 == 0)
+		child2(pipex, envp);
+	close(pipex->pipe_fd[0]);
+	close(pipex->pipe_fd[1]);
+	waitpid(pipex->pid1, NULL, 0);
+	waitpid(pipex->pid2, NULL, 0);
+	return (1);
+}
 
 void ll()
 {
@@ -117,7 +132,7 @@ void ll()
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	atexit(ll);
+	// atexit(ll);
 	t_pipex	pipex;
 
 	if (argc == 5)
@@ -130,6 +145,8 @@ int	main(int argc, char *argv[], char *envp[])
 			clean_up(&pipex);
 			return (1);
 		}
+		if (!excute(&pipex, envp))
+			return (1);
 		clean_up(&pipex);
 	}
 	else
