@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/05 11:08:35 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:29:19 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-# define ERR_INFILE "Infile\n"
-# define ERR_OUTFILE "Outfile\n"
-# define ERR_INPUT "Invalid number of arguments.\n"
-# define ERR_PIPE "Pipe\n"
-# define ERR_CMD "Command not found\n"
 
 typedef struct s_pipex
 {
