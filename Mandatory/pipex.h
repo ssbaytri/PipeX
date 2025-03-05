@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/03 07:45:21 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:16:49 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 
 typedef struct s_pipex
 {
+    int     pipe_fd[2];
+    pid_t   pid1;
+    pid_t   pid2;
     int     infile_fd;
     int     outfile_fd;
     char    **cmd1_args;

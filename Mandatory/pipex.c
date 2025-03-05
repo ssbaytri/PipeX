@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/04 00:50:03 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:34:04 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*cmd_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-void	parce_args(t_pipex *pipex, char *argv[])
+void	parse_args(t_pipex *pipex, char *argv[])
 {
 	pipex->cmd1_args = ft_split(argv[2], ' ');
 	pipex->cmd2_args = ft_split(argv[3], ' ');
@@ -78,38 +78,59 @@ int	validate_files(t_pipex *pipex, char *argv[])
 	return (1);
 }
 
-void	clean_up(char **paths, t_pipex *pipex)
+int check_paths(t_pipex *pipex, char *envp[])
+{
+	char *path;
+	char **paths;
+
+	path = get_envp_path(envp);
+	if (!path)
+		return (0);
+	paths = ft_split(path, ':');
+	if (!paths)
+		return (0);
+	pipex->cmd1_path = cmd_path(pipex->cmd1_args[0], paths);
+	pipex->cmd2_path = cmd_path(pipex->cmd2_args[0], paths);
+	free_2d(paths);
+	if (!pipex->cmd1_path)
+		ft_printf("command not found: %s\n", pipex->cmd1_args[0]);
+	if (!pipex->cmd2_path)
+		ft_printf("command not found: %s\n", pipex->cmd2_args[0]);
+	return (1);
+}
+
+void	clean_up(t_pipex *pipex)
 {
 	free(pipex->cmd1_path);
 	free(pipex->cmd2_path);
 	free_2d(pipex->cmd1_args);
 	free_2d(pipex->cmd2_args);
-	free_2d(paths);
 	close(pipex->infile_fd);
 	close(pipex->outfile_fd);
 }
 
+
+void ll()
+{
+	system("leaks pipex");
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
+	atexit(ll);
 	t_pipex	pipex;
-	char	**paths;
 
 	if (argc == 5)
 	{
 		if (!validate_files(&pipex, argv))
 			return (1);
-		parce_args(&pipex, argv);
-		paths = ft_split(get_envp_path(envp), ':');
-		for (int i = 0; paths[i]; i++)
-			printf("%s\n", paths[i]);
-
-		pipex.cmd1_path = cmd_path(pipex.cmd1_args[0], paths);
-		pipex.cmd2_path = cmd_path(pipex.cmd2_args[0], paths);
-
-		ft_printf("cmd1_path: %s\n", pipex.cmd1_path);
-		ft_printf("cmd2_path: %s\n", pipex.cmd2_path);
-
-		clean_up(paths, &pipex);
+		parse_args(&pipex, argv);
+		if (!check_paths(&pipex, envp))
+		{
+			clean_up(&pipex);
+			return (1);
+		}
+		clean_up(&pipex);
 	}
 	else
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2\n", 2);
