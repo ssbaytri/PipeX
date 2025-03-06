@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/06 09:09:51 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:50:40 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,32 @@ char	*cmd_path(char *cmd, char **paths)
 	return (NULL);
 }
 
+int	has_quotes(char const *s)
+{
+	size_t	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\'' || s[i] == '"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	parse_args(t_pipex *pipex, char *argv[])
 {
-	pipex->cmd1_args = ft_split(argv[2], ' ');
-	pipex->cmd2_args = smart_split(argv[3]);
+	if (has_quotes(argv[2]))
+		pipex->cmd1_args = smart_split(argv[2]);
+	else
+		pipex->cmd1_args = ft_split(argv[2], ' ');
+	if (has_quotes(argv[3]))
+		pipex->cmd2_args = smart_split(argv[3]);
+	else
+		pipex->cmd2_args = ft_split(argv[3], ' ');
 }
 
 int	validate_files(t_pipex *pipex, char *argv[])
