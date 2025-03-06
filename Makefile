@@ -7,6 +7,7 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 
 M_SRCS = 	Mandatory/pipex.c \
 			Mandatory/childs.c \
+			Mandatory/smart_split.c \
 
 M_OBJS = $(M_SRCS:.c=.o)
 

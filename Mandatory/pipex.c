@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/05 12:51:08 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:09:51 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*cmd_path(char *cmd, char **paths)
 void	parse_args(t_pipex *pipex, char *argv[])
 {
 	pipex->cmd1_args = ft_split(argv[2], ' ');
-	pipex->cmd2_args = ft_split(argv[3], ' ');
+	pipex->cmd2_args = smart_split(argv[3]);
 }
 
 int	validate_files(t_pipex *pipex, char *argv[])
@@ -127,9 +127,14 @@ int	excute(t_pipex *pipex, char *envp[])
 	return (1);
 }
 
+void	ll()
+{
+	system("leaks pipex");
+}
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	atexit(ll);
 	t_pipex	pipex;
 
 	if (argc == 5)
@@ -137,6 +142,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!validate_files(&pipex, argv))
 			return (1);
 		parse_args(&pipex, argv);
+		for(int i = 0; pipex.cmd2_args[i]; i++)
+			printf("%s\n", pipex.cmd2_args[i]);
 		if (!check_paths(&pipex, envp))
 		{
 			clean_up(&pipex);
