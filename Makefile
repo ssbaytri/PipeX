@@ -6,9 +6,10 @@ LIBFT_DIR = libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
 
 M_SRCS = 	Mandatory/pipex.c \
-			Mandatory/childs.c \
+			Mandatory/excute.c \
 			Mandatory/tokens.c \
 			Mandatory/tokens2.c \
+			Mandatory/parce.c \
 
 M_OBJS = $(M_SRCS:.c=.o)
 

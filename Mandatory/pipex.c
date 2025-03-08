@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 05:18:10 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 07:02:23 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,78 +25,13 @@ void	free_2d(char **arr)
 	free(arr);
 }
 
-char	*get_envp_path(char *envp[])
-{
-	while (*envp)
-	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-			return (*envp + 5);
-		envp++;
-	}
-	return (NULL);
-}
-
-char	*cmd_path(char *cmd, char **paths)
-{
-	char	*tmp;
-	char	*full_path;
-
-	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
-	while (*paths)
-	{
-		tmp = ft_strjoin(*paths, "/");
-		full_path = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(full_path, F_OK) == 0)
-			return (full_path);
-		free(full_path);
-		paths++;
-	}
-	return (NULL);
-}
-
-void	parse_args(t_pipex *pipex, char *argv[])
+static void	parse_args(t_pipex *pipex, char *argv[])
 {
 	pipex->cmd1_args = smart_split(argv[2]);
 	pipex->cmd2_args = smart_split(argv[3]);
 }
 
-int	validate_files(t_pipex *pipex, char *argv[])
-{
-	pipex->outfile_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (pipex->outfile_fd == -1)
-	{
-		perror("outfile");
-		return (0);
-	}
-	pipex->infile_fd = open(argv[1], O_RDONLY);
-	if (pipex->infile_fd == -1)
-	{
-		perror("infile");
-		return (0);
-	}
-	return (1);
-}
-
-int	check_paths(t_pipex *pipex, char *envp[])
-{
-	char	*path;
-	char	**paths;
-
-	path = get_envp_path(envp);
-	if (!path)
-		return (0);
-	paths = ft_split(path, ':');
-	if (!paths)
-		return (0);
-	pipex->cmd1_path = cmd_path(pipex->cmd1_args[0], paths);
-	pipex->cmd2_path = cmd_path(pipex->cmd2_args[0], paths);
-	free_2d(paths);
-	return (1);
-}
-
-void	clean_up(t_pipex *pipex)
+static void	clean_up(t_pipex *pipex)
 {
 	free(pipex->cmd1_path);
 	free(pipex->cmd2_path);
@@ -106,45 +41,21 @@ void	clean_up(t_pipex *pipex)
 	close(pipex->outfile_fd);
 }
 
-int	excute(t_pipex *pipex, char *envp[])
-{
-	if (pipe(pipex->pipe_fd) == -1)
-	{
-		perror("pipe");
-		return (0);
-	}
-	pipex->pid1 = fork();
-	if (pipex->pid1 == 0)
-		child1(pipex, envp);
-	pipex->pid2 = fork();
-	if (pipex->pid2 == 0)
-		child2(pipex, envp);
-	close(pipex->pipe_fd[0]);
-	close(pipex->pipe_fd[1]);
-	waitpid(pipex->pid1, NULL, 0);
-	waitpid(pipex->pid2, NULL, 0);
-	return (1);
-}
-
-void	ll()
+void	ll(void)
 {
 	system("leaks pipex");
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	atexit(ll);
 	t_pipex	pipex;
 
+	atexit(ll);
 	if (argc == 5)
 	{
 		if (!validate_files(&pipex, argv))
 			return (1);
 		parse_args(&pipex, argv);
-		for(int i = 0; pipex.cmd1_args[i]; i++)
-			printf("%s\n", pipex.cmd1_args[i]);
-		for(int i = 0; pipex.cmd2_args[i]; i++)
-			printf("%s\n", pipex.cmd2_args[i]);
 		if (!check_paths(&pipex, envp))
 		{
 			clean_up(&pipex);

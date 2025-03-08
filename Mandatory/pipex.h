@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:46:19 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 06:15:14 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 07:00:26 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ typedef struct s_pipex
 	char	*cmd2_path;
 }			t_pipex;
 
-void		child1(t_pipex *pipex, char *envp[]);
-void		child2(t_pipex *pipex, char *envp[]);
-
 int			process_tokens(char const *s, char **arr, size_t *i, size_t *j);
 char		**smart_split(char const *s);
+int			excute(t_pipex *pipex, char *envp[]);
+int			validate_files(t_pipex *pipex, char *argv[]);
+int			check_paths(t_pipex *pipex, char *envp[]);
+void		free_2d(char **arr);
 
 #endif
