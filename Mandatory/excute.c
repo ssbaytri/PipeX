@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   childs.c                                           :+:      :+:    :+:   */
+/*   excute.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:47:07 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 06:35:54 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 08:15:01 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	child1(t_pipex *pipex, char *envp[])
 	ft_putstr_fd("command not found: ", 2);
 	ft_putstr_fd(pipex->cmd1_args[0], 2);
 	ft_putstr_fd("\n", 2);
-	exit(1);
+	exit(127);
 }
 
 static void	child2(t_pipex *pipex, char *envp[])
@@ -35,11 +35,14 @@ static void	child2(t_pipex *pipex, char *envp[])
 	ft_putstr_fd("command not found: ", 2);
 	ft_putstr_fd(pipex->cmd2_args[0], 2);
 	ft_putstr_fd("\n", 2);
-	exit(1);
+	exit(127);
 }
 
 int	excute(t_pipex *pipex, char *envp[])
 {
+	int	status1;
+	int	status2;
+
 	if (pipe(pipex->pipe_fd) == -1)
 	{
 		perror("pipe");
@@ -53,7 +56,11 @@ int	excute(t_pipex *pipex, char *envp[])
 		child2(pipex, envp);
 	close(pipex->pipe_fd[0]);
 	close(pipex->pipe_fd[1]);
-	waitpid(pipex->pid1, NULL, 0);
-	waitpid(pipex->pid2, NULL, 0);
+	waitpid(pipex->pid1, &status1, 0);
+	waitpid(pipex->pid2, &status2, 0);
+	if (WIFEXITED(status1) && WEXITSTATUS(status1) == 127)
+		exit(127);
+	if (WIFEXITED(status2) && WEXITSTATUS(status2) == 127)
+		exit(127);
 	return (1);
 }

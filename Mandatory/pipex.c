@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 07:02:23 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 08:24:22 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	pipex;
 
-	atexit(ll);
+	// atexit(ll);
 	if (argc == 5)
 	{
 		if (!validate_files(&pipex, argv))
@@ -61,8 +61,7 @@ int	main(int argc, char *argv[], char *envp[])
 			clean_up(&pipex);
 			return (1);
 		}
-		if (!excute(&pipex, envp))
-			return (1);
+		excute(&pipex, envp);
 		clean_up(&pipex);
 	}
 	else
