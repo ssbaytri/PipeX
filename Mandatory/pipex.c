@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 03:34:21 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 05:18:10 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	ll()
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	// atexit(ll);
+	atexit(ll);
 	t_pipex	pipex;
 
 	if (argc == 5)

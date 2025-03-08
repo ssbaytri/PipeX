@@ -6,12 +6,11 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 08:01:56 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 01:02:38 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 05:11:59 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <stdlib.h>
 
 static char	**free_split(char **arr, size_t j)
 {

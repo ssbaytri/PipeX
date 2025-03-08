@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:47:07 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/05 12:32:13 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 05:20:59 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	child2(t_pipex *pipex, char *envp[])
 	if (pipex->cmd2_path)
 		execve(pipex->cmd2_path, pipex->cmd2_args, envp);
 	ft_putstr_fd("command not found: ", 2);
-	ft_putstr_fd(pipex->cmd1_args[0], 2);
+	ft_putstr_fd(pipex->cmd2_args[0], 2);
 	ft_putstr_fd("\n", 2);
 	exit(1);
 }
