@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/06 09:50:40 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:34:21 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,47 +56,24 @@ char	*cmd_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-int	has_quotes(char const *s)
-{
-	size_t	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\'' || s[i] == '"')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void	parse_args(t_pipex *pipex, char *argv[])
 {
-	if (has_quotes(argv[2]))
-		pipex->cmd1_args = smart_split(argv[2]);
-	else
-		pipex->cmd1_args = ft_split(argv[2], ' ');
-	if (has_quotes(argv[3]))
-		pipex->cmd2_args = smart_split(argv[3]);
-	else
-		pipex->cmd2_args = ft_split(argv[3], ' ');
+	pipex->cmd1_args = smart_split(argv[2]);
+	pipex->cmd2_args = smart_split(argv[3]);
 }
 
 int	validate_files(t_pipex *pipex, char *argv[])
 {
-	pipex->infile_fd = open(argv[1], O_RDONLY);
-	if (pipex->infile_fd == -1)
-	{
-		perror("infile");
-		return (0);
-	}
 	pipex->outfile_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex->outfile_fd == -1)
 	{
 		perror("outfile");
-		close(pipex->infile_fd);
+		return (0);
+	}
+	pipex->infile_fd = open(argv[1], O_RDONLY);
+	if (pipex->infile_fd == -1)
+	{
+		perror("infile");
 		return (0);
 	}
 	return (1);
@@ -156,7 +133,7 @@ void	ll()
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	atexit(ll);
+	// atexit(ll);
 	t_pipex	pipex;
 
 	if (argc == 5)
@@ -164,6 +141,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!validate_files(&pipex, argv))
 			return (1);
 		parse_args(&pipex, argv);
+		for(int i = 0; pipex.cmd1_args[i]; i++)
+			printf("%s\n", pipex.cmd1_args[i]);
 		for(int i = 0; pipex.cmd2_args[i]; i++)
 			printf("%s\n", pipex.cmd2_args[i]);
 		if (!check_paths(&pipex, envp))
