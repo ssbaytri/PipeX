@@ -7,6 +7,7 @@ M_SRCS = Mandatory/pipex.c \
 B_SRCS = Bonus/pipex_bonus.c \
          Bonus/here_doc_bonus.c \
 		 Bonus/error_bonus.c \
+		 Bonus/parse_files.c \
 
 M_OBJS = $(M_SRCS:.c=.o)
 B_OBJS = $(B_SRCS:.c=.o)
@@ -26,7 +27,7 @@ bonus: $(B_OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(B_OBJS) ./libft/libft.a
 
 # Rule to compile .o files
-%.o: %.c
+%.o: %.c Mandatory/pipex.h Bonus/pipex_bonus.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

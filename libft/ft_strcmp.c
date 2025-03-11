@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 02:02:42 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/11 11:52:12 by ssbaytri         ###   ########.fr       */
+/*   Created: 2025/03/11 11:16:06 by ssbaytri          #+#    #+#             */
+/*   Updated: 2025/03/11 11:16:17 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	ll(void)
+int	ft_strcmp(char *s1, char *s2)
 {
-	system("leaks pipex");
-}
-
-int	main(int argc, char *argv[], char *envp[])
-{
-	// atexit(ll);
-	t_pipex pipex;
-	(void)envp;
-	if (argc < check_here_doc(argv[1], &pipex))
-		return (error_msg("Error: Invalid number of arguments\n"));
-	parse_infile(argv, &pipex);
-	parse_outfile(argv[argc - 1], &pipex);
-	return (0);
+	while (*s1 && *s2 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

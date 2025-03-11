@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:37:54 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/01 22:07:54 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:17:00 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char				*ft_strnstr(const char *hy, const char *nd, size_t len);
 int					ft_atoi(const char *str);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *src);
+int					ft_strcmp(char *s1, char *s2);
 
 // ADDITIONAL FUNCTIONS
 char				*ft_substr(char const *s, unsigned int start, size_t len);
