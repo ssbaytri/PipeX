@@ -7,7 +7,10 @@ M_SRCS = Mandatory/pipex.c \
 B_SRCS = Bonus/pipex_bonus.c \
          Bonus/here_doc_bonus.c \
 		 Bonus/error_bonus.c \
-		 Bonus/parse_files.c \
+		 Bonus/parse_files_bonus.c \
+		 Bonus/tokens_bonus.c \
+		 Bonus/tokens2_bonus.c \
+		 Bonus/parse_cmds_bonus.c \
 
 M_OBJS = $(M_SRCS:.c=.o)
 B_OBJS = $(B_SRCS:.c=.o)

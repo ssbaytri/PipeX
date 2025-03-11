@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 07:09:02 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/11 11:35:29 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:59:22 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int	check_here_doc(char *farg, t_pipex *pipex)
 {
 	if (farg && !ft_strcmp("here_doc", farg))
 	{
+		pipex->cmd_start = 3;
 		pipex->here_doc = 1;
 		return (6);
 	}
 	else
 	{
+		pipex->cmd_start = 2;
 		pipex->here_doc = 0;
 		return (5);
 	}

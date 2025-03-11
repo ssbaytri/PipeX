@@ -1,7 +1,0 @@
-Mandatory/excute.c: OK!
-Mandatory/parce.c: OK!
-Mandatory/pipex.c: Error!
-Error: WRONG_SCOPE_COMMENT  (line:  53, col:   5):	Comment is invalid in this scope
-Mandatory/pipex.h: OK!
-Mandatory/tokens.c: OK!
-Mandatory/tokens2.c: OK!

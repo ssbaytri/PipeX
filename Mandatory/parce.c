@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 06:25:34 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 06:29:07 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:21:47 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ static char	*cmd_path(char *cmd, char **paths)
 	char	*tmp;
 	char	*full_path;
 
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	while (*paths)
 	{
 		tmp = ft_strjoin(*paths, "/");
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (access(full_path, F_OK) == 0)
+		if (access(full_path, F_OK) == 0 && access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);
 		paths++;
