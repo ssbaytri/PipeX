@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:00:34 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/11 14:52:17 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/12 08:38:09 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,4 @@ void	fill_args(t_pipex *pipex, char *argv[], int argc)
 		i++;
 		j++;
 	}
-	pipex->cmd_args[j] = NULL;
 }

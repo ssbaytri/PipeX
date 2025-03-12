@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:42 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/11 14:41:26 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:36:41 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ void	free_2d(char **arr)
 		tmp++;
 	}
 	free(arr);
+}
+
+void    free_3d(char ***arr, int cmd_count)
+{
+    int i;
+    if (arr)
+    {
+        i = 0;
+        while (i < cmd_count)
+        {
+            if (arr[i])
+                free_2d(arr[i]);
+            i++;
+        }
+    }
+    free(arr);
 }
 
 void print_cmd_args(t_pipex *pipex) {
@@ -61,5 +77,8 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_printf("here_doc: %d\n", pipex.here_doc);
 	fill_args(&pipex, argv, argc);
 	print_cmd_args(&pipex);
+	free_3d(pipex.cmd_args, pipex.cmd_count);
+	close(pipex.infile_fd);
+	close(pipex.outfile_fd);
 	return (0);
 }

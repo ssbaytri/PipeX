@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 07:09:02 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/11 13:59:22 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:45:35 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	here_doc(char *limiter, t_pipex *pipex)
 		buffer = get_next_line(0);
 		if (!buffer)
 			exit(1);
-		if (!ft_strncmp(buffer, limiter, ft_strlen(buffer) - 1))
+		if (!ft_strncmp(buffer, limiter, ft_strlen(limiter))
+			&& buffer[ft_strlen(limiter)] == '\n')
 			break ;
 		write(fd, buffer, ft_strlen(buffer));
 		free(buffer);
@@ -51,8 +52,5 @@ void	here_doc(char *limiter, t_pipex *pipex)
 	close(fd);
 	pipex->infile_fd = open(".here_doc", O_RDONLY);
 	if (pipex->infile_fd < 0)
-	{
 		unlink(".here_doc");
-		perror_msg("here_doc");
-	}
 }

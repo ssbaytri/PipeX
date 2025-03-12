@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse_files_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:17:13 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/11 11:50:30 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:47:48 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	parse_infile(char *argv[], t_pipex *pipex)
 {
-	if (!ft_strcmp("here_doc", argv[1]))
+	if (pipex->here_doc)
 		here_doc(argv[2], pipex);
 	else
 	{
