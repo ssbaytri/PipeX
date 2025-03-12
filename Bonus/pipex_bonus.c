@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:42 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/12 09:36:41 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:20:07 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,55 @@ void	free_2d(char **arr)
 	free(arr);
 }
 
-void    free_3d(char ***arr, int cmd_count)
+void	free_3d(char ***arr, int cmd_count)
 {
-    int i;
-    if (arr)
-    {
-        i = 0;
-        while (i < cmd_count)
-        {
-            if (arr[i])
-                free_2d(arr[i]);
-            i++;
-        }
-    }
-    free(arr);
+	int	i;
+
+	if (arr)
+	{
+		i = 0;
+		while (i < cmd_count)
+		{
+			if (arr[i])
+				free_2d(arr[i]);
+			i++;
+		}
+	}
+	free(arr);
 }
 
-void print_cmd_args(t_pipex *pipex) {
-    if (!pipex || !pipex->cmd_args) return;
+void	print_cmd_args(t_pipex *pipex)
+{
+	if (!pipex || !pipex->cmd_args)
+		return ;
+	for (int i = 0; i < pipex->cmd_count; i++)
+	{
+		printf("Command %d: ", i);
+		if (pipex->cmd_args[i])
+		{
+			for (int j = 0; pipex->cmd_args[i][j]; j++)
+			{
+				printf("%s ", pipex->cmd_args[i][j]);
+			}
+		}
+		else
+		{
+			printf("(NULL)");
+		}
+		printf("\n");
+	}
+}
 
-    for (int i = 0; i < pipex->cmd_count; i++) {  // Use cmd_count
-        printf("Command %d: ", i);
-        if (pipex->cmd_args[i]) {
-            for (int j = 0; pipex->cmd_args[i][j]; j++) {  // Iterate args
-                printf("%s ", pipex->cmd_args[i][j]);
-            }
-        } else {
-            printf("(NULL)");
-        }
-        printf("\n");
-    }
+void	print_paths(t_pipex *pipex)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipex->cmd_count)
+	{
+		printf("Path %d: %s\n", i, pipex->cmd_paths[i]);
+		i++;
+	}
 }
 
 void	ll(void)
@@ -64,20 +83,21 @@ void	ll(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	t_pipex	pipex;
+
 	atexit(ll);
-	t_pipex pipex;
 	(void)envp;
 	if (argc < check_here_doc(argv[1], &pipex))
 		return (error_msg("Error: Invalid number of arguments\n"));
 	parse_infile(argv, &pipex);
 	parse_outfile(argv[argc - 1], &pipex);
 	pipex.cmd_count = argc - 3 - pipex.here_doc;
-	ft_printf("cmd_count: %d\n", pipex.cmd_count);
-	ft_printf("cmd_start: %d\n", pipex.cmd_start);
-	ft_printf("here_doc: %d\n", pipex.here_doc);
 	fill_args(&pipex, argv, argc);
+	fill_paths(&pipex, envp);
 	print_cmd_args(&pipex);
+	print_paths(&pipex);
 	free_3d(pipex.cmd_args, pipex.cmd_count);
+    free_2d(pipex.cmd_paths);
 	close(pipex.infile_fd);
 	close(pipex.outfile_fd);
 	return (0);
