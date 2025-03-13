@@ -6,11 +6,24 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:42 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/12 10:20:07 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:25:29 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	free_cmd_paths(char **arr, int cmd_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_count)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
 
 void	free_2d(char **arr)
 {
@@ -85,7 +98,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	pipex;
 
-	atexit(ll);
+	// atexit(ll);
 	(void)envp;
 	if (argc < check_here_doc(argv[1], &pipex))
 		return (error_msg("Error: Invalid number of arguments\n"));
@@ -96,8 +109,9 @@ int	main(int argc, char *argv[], char *envp[])
 	fill_paths(&pipex, envp);
 	print_cmd_args(&pipex);
 	print_paths(&pipex);
+	execute(&pipex, envp);
 	free_3d(pipex.cmd_args, pipex.cmd_count);
-    free_2d(pipex.cmd_paths);
+	free_cmd_paths(pipex.cmd_paths, pipex.cmd_count);
 	close(pipex.infile_fd);
 	close(pipex.outfile_fd);
 	return (0);

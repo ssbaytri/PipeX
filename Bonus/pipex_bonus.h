@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:45 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/12 10:16:17 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:21:09 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ void		parse_outfile(char *outfile, t_pipex *pipex);
 
 void		fill_args(t_pipex *pipex, char *argv[], int argc);
 int			fill_paths(t_pipex *pipex, char *envp[]);
+
+int execute(t_pipex *pipex, char *envp[]);
 
 #endif
