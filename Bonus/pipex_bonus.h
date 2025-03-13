@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:45 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/13 10:21:09 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:25:01 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ void		perror_msg(char *err);
 
 int			process_tokens(char const *s, char **arr, size_t *i, size_t *j);
 char		**smart_split(char const *s);
-void		 free_2d(char **arr);
+
+void		free_2d(char **arr);
+void		free_3d(char ***arr, int cmd_count);
+void		free_cmd_paths(char **arr, int cmd_count);
+void		free_pids(t_pipex *pipex);
+void		free_pipe_fds(t_pipex *pipex);
 
 int			check_here_doc(char *farg, t_pipex *pipex);
 void		here_doc(char *limiter, t_pipex *pipex);
@@ -49,6 +54,6 @@ void		parse_outfile(char *outfile, t_pipex *pipex);
 void		fill_args(t_pipex *pipex, char *argv[], int argc);
 int			fill_paths(t_pipex *pipex, char *envp[]);
 
-int execute(t_pipex *pipex, char *envp[]);
+int			execute(t_pipex *pipex, char *envp[]);
 
 #endif

@@ -11,7 +11,8 @@ B_SRCS = Bonus/pipex_bonus.c \
 		 Bonus/tokens_bonus.c \
 		 Bonus/tokens2_bonus.c \
 		 Bonus/parse_cmds_bonus.c \
-		 Bonus/execute_bonus.c
+		 Bonus/execute_bonus.c \
+		 Bonus/free_bonus.c \
 
 M_OBJS = $(M_SRCS:.c=.o)
 B_OBJS = $(B_SRCS:.c=.o)
