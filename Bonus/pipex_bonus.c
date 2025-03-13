@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:42 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/13 10:25:29 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:53:15 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,28 @@ void	free_3d(char ***arr, int cmd_count)
 	free(arr);
 }
 
+void	free_pids(t_pipex *pipex)
+{
+	if (pipex->pids)
+		free(pipex->pids);
+}
+
+void	free_pipe_fds(t_pipex *pipex)
+{
+	int	i;
+
+	if (pipex->pipe_fds)
+	{
+		i = 0;
+		while (i < pipex->cmd_count - 1)
+		{
+			free(pipex->pipe_fds[i]);
+			i++;
+		}
+		free(pipex->pipe_fds);
+	}
+}
+
 void	print_cmd_args(t_pipex *pipex)
 {
 	if (!pipex || !pipex->cmd_args)
@@ -98,7 +120,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	pipex;
 
-	// atexit(ll);
+	atexit(ll);
 	(void)envp;
 	if (argc < check_here_doc(argv[1], &pipex))
 		return (error_msg("Error: Invalid number of arguments\n"));
@@ -112,6 +134,8 @@ int	main(int argc, char *argv[], char *envp[])
 	execute(&pipex, envp);
 	free_3d(pipex.cmd_args, pipex.cmd_count);
 	free_cmd_paths(pipex.cmd_paths, pipex.cmd_count);
+	free_pids(&pipex);
+	free_pipe_fds(&pipex);
 	close(pipex.infile_fd);
 	close(pipex.outfile_fd);
 	return (0);
