@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/09 03:06:36 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/14 03:17:23 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,10 @@ static void	clean_up(t_pipex *pipex)
 	close(pipex->outfile_fd);
 }
 
-void	ll(void)
-{
-	system("leaks pipex");
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	pipex;
 
-	// atexit(ll);
 	if (argc == 5)
 	{
 		if (!validate_files(&pipex, argv))

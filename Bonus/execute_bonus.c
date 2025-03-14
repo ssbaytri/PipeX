@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:32:16 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/13 14:17:08 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/14 03:20:28 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	child_process(t_pipex *pipex, char *envp[], int i)
 	exit(1);
 }
 
-static int	setup_pipes(t_pipex *pipex)
+int	setup_pipes(t_pipex *pipex)
 {
 	int	i;
 
@@ -67,7 +67,7 @@ static int	setup_pipes(t_pipex *pipex)
 	return (1);
 }
 
-static int	fork_children(t_pipex *pipex, char *envp[])
+int	fork_children(t_pipex *pipex, char *envp[])
 {
 	int	i;
 
@@ -87,7 +87,7 @@ static int	fork_children(t_pipex *pipex, char *envp[])
 	return (1);
 }
 
-static void	close_and_wait(t_pipex *pipex)
+void	close_and_wait(t_pipex *pipex)
 {
 	int	i;
 
@@ -104,14 +104,4 @@ static void	close_and_wait(t_pipex *pipex)
 		waitpid(pipex->pids[i], NULL, 0);
 		i++;
 	}
-}
-
-int	execute(t_pipex *pipex, char *envp[])
-{
-	if (!setup_pipes(pipex))
-		return (0);
-	if (!fork_children(pipex, envp))
-		return (0);
-	close_and_wait(pipex);
-	return (1);
 }
