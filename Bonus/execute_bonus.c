@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:32:16 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/14 03:20:28 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 08:02:52 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,12 @@ int	fork_children(t_pipex *pipex, char *envp[])
 		if (pipex->pids[i] == -1)
 			return (0);
 		if (pipex->pids[i] == 0)
+		{
+			if ((i == 0 && pipex->infile_fd < 0) || (i == pipex->cmd_count - 1
+					&& pipex->outfile_fd < 0))
+				exit(1);
 			child_process(pipex, envp, i);
+		}
 		i++;
 	}
 	return (1);

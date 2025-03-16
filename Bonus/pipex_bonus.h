@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:45 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/14 03:20:23 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 07:51:31 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_pipex
 }			t_pipex;
 
 int			error_msg(char *err);
-void		perror_msg(char *err);
 
 int			process_tokens(char const *s, char **arr, size_t *i, size_t *j);
 char		**smart_split(char const *s);
@@ -48,8 +47,8 @@ void		free_pipe_fds(t_pipex *pipex);
 
 int			check_here_doc(char *farg, t_pipex *pipex);
 void		here_doc(char *limiter, t_pipex *pipex);
-void		parse_infile(char *argv[], t_pipex *pipex);
-void		parse_outfile(char *outfile, t_pipex *pipex);
+int			parse_infile(char *argv[], t_pipex *pipex);
+int			parse_outfile(char *outfile, t_pipex *pipex);
 
 void		fill_args(t_pipex *pipex, char *argv[], int argc);
 int			fill_paths(t_pipex *pipex, char *envp[]);

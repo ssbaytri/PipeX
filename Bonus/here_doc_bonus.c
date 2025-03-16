@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 07:09:02 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/12 09:45:35 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 08:18:16 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,22 @@ void	here_doc(char *limiter, t_pipex *pipex)
 	int		fd;
 	char	*buffer;
 
-	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open("/tmp/here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
-		perror_msg("here_doc");
+		perror("here_doc");
 	while (1)
 	{
 		ft_printf("here_doc>");
 		buffer = get_next_line(0);
-		if (!buffer)
-			exit(1);
-		if (!ft_strncmp(buffer, limiter, ft_strlen(limiter))
-			&& buffer[ft_strlen(limiter)] == '\n')
+		if (!buffer || (!ft_strncmp(buffer, limiter, ft_strlen(limiter))
+			&& buffer[ft_strlen(limiter)] == '\n'))
 			break ;
 		write(fd, buffer, ft_strlen(buffer));
 		free(buffer);
 	}
 	free(buffer);
 	close(fd);
-	pipex->infile_fd = open(".here_doc", O_RDONLY);
+	pipex->infile_fd = open("/tmp/here_doc", O_RDONLY);
 	if (pipex->infile_fd < 0)
-		unlink(".here_doc");
+		unlink("/tmp/here_doc");
 }

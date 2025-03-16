@@ -6,11 +6,17 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:02:42 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/14 03:27:37 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 09:09:04 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+int	error_msg(char *err)
+{
+	write(2, err, ft_strlen(err));
+	return (1);
+}
 
 static int	execute(t_pipex *pipex, char *envp[])
 {
