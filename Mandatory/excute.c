@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:47:07 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/08 08:15:01 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 10:09:47 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int	excute(t_pipex *pipex, char *envp[])
 		return (0);
 	}
 	pipex->pid1 = fork();
-	if (pipex->pid1 == 0)
+	if (pipex->pid1 == 0 && pipex->infile_fd > 0)
 		child1(pipex, envp);
 	pipex->pid2 = fork();
-	if (pipex->pid2 == 0)
+	if (pipex->pid2 == 0 && pipex->outfile_fd > 0)
 		child2(pipex, envp);
 	close(pipex->pipe_fd[0]);
 	close(pipex->pipe_fd[1]);

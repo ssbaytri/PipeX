@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:55:29 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/14 03:17:23 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 10:09:13 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc == 5)
 	{
-		if (!validate_files(&pipex, argv))
-			return (1);
+		validate_files(&pipex, argv);
 		parse_args(&pipex, argv);
 		if (!check_paths(&pipex, envp))
 		{
