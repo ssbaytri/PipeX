@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 07:09:02 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/16 08:18:16 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 09:21:59 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	here_doc(char *limiter, t_pipex *pipex)
 		ft_printf("here_doc>");
 		buffer = get_next_line(0);
 		if (!buffer || (!ft_strncmp(buffer, limiter, ft_strlen(limiter))
-			&& buffer[ft_strlen(limiter)] == '\n'))
+				&& buffer[ft_strlen(limiter)] == '\n'))
 			break ;
 		write(fd, buffer, ft_strlen(buffer));
 		free(buffer);

@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:17:13 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/03/16 07:53:27 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/03/16 09:22:13 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ int	parse_outfile(char *outfile, t_pipex *pipex)
 		perror("outfile");
 		return (0);
 	}
-	return (1);	
+	return (1);
 }
