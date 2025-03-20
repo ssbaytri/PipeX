@@ -28,7 +28,7 @@ It takes input from `file1`, processes it through `cmd1`, pipes the output to `c
 ## Installation
 Clone the repository and compile the program:
 ```bash
-git clone https://github.com/yourusername/pipex.git
+git clone https://github.com/ssbaytri/pipex.git
 cd pipex
 make
 ```
