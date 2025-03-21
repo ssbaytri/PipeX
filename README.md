@@ -1,5 +1,9 @@
 # Pipex
 
+<div align="center">
+  <img src="https://drive.google.com/uc?id=1hlW2jOBZc3XvXujkAsG17ODC4yG0PJ66" alt="PipeX Header" width="100%">
+</div>
+
 ## Overview
 This project implements a program that simulates the functionality of shell pipes in C. It creates a pipeline between commands, redirecting the output of one command as input to the next, while also handling file input/output redirection.
 
