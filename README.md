@@ -2,98 +2,154 @@
 
 <div align="center">
   <img src="https://drive.google.com/uc?id=1hlW2jOBZc3XvXujkAsG17ODC4yG0PJ66" alt="PipeX Header" width="100%">
+  <p><strong>A custom implementation of Unix pipes in C</strong></p>
+  <p>
+    <a href="#overview">Overview</a> •
+    <a href="#functionality">Functionality</a> •
+    <a href="#installation">Installation</a> •
+    <a href="#usage">Usage</a> •
+    <a href="#examples">Examples</a> •
+    <a href="#technical-details">Technical Details</a>
+  </p>
 </div>
 
 ## Overview
-This project implements a program that simulates the functionality of shell pipes in C. It creates a pipeline between commands, redirecting the output of one command as input to the next, while also handling file input/output redirection.
 
-## Table of Contents
-- [Functionality](#functionality)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
-- [Implementation Details](#implementation-details)
-- [Bonus Features](#bonus-features)
+Pipex is a system programming project that replicates the behavior of Unix pipes. It demonstrates low-level process management, file descriptor manipulation, and inter-process communication techniques in C.
+
+This project implements the core functionality of shell command pipelines, enabling data to flow seamlessly between multiple processes while maintaining proper error handling and resource management.
 
 ## Functionality
-The program `pipex` replicates the behavior of the shell command:
+
+The Pipex program recreates the behavior of the shell command:
+
 ```bash
 < file1 cmd1 | cmd2 > file2
 ```
 
-It takes input from `file1`, processes it through `cmd1`, pipes the output to `cmd2`, and stores the final result in `file2`.
+### Process Flow
 
-## Requirements
-- GCC compiler
+1. Read input data from `file1`
+2. Execute `cmd1` with the input data
+3. Pass the output of `cmd1` as input to `cmd2`
+4. Write the final output to `file2`
+
+## Installation
+
+### Prerequisites
+
+- C Compiler (GCC/Clang)
 - Unix-based environment (Linux/macOS)
 - Make
 
-## Installation
-Clone the repository and compile the program:
+### Build Process
+
 ```bash
+# Clone the repository
 git clone https://github.com/ssbaytri/pipex.git
+
+# Navigate to the project directory
 cd pipex
+
+# Compile the program
 make
+
+# Optional: Compile with bonus features
+make bonus
 ```
 
 ## Usage
-### Mandatory part
+
+### Standard Operation
+
 ```bash
-./pipex file1 cmd1 cmd2 file2
+./pipex infile cmd1 cmd2 outfile
 ```
 
-### Bonus part
-For multiple pipes:
+### Advanced Features (Bonus)
+
+**Multiple command pipeline:**
 ```bash
 ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2
 ```
 
-For here_doc functionality:
+**Here document support:**
 ```bash
-./pipex here_doc LIMITER cmd1 cmd2 file
+./pipex here_doc DELIMITER cmd1 cmd2 outfile
 ```
 
 ## Examples
+
+### Basic Command Execution
+
 ```bash
-# Example 1
+# Count the number of files in the current directory
 ./pipex infile "ls -l" "wc -l" outfile
-# Equivalent to: < infile ls -l | wc -l > outfile
 
-# Example 2
-./pipex infile "grep a1" "wc -w" outfile
-# Equivalent to: < infile grep a1 | wc -w > outfile
-
-# Bonus example (multiple pipes)
-./pipex infile "ls -l" "grep a" "wc -l" outfile
-# Equivalent to: < infile ls -l | grep a | wc -l > outfile
-
-# Bonus example (here_doc)
-./pipex here_doc EOF "grep hello" "wc -w" outfile
-# Equivalent to: grep hello << EOF | wc -w >> outfile
+# Equivalent shell command:
+# < infile ls -l | wc -l > outfile
 ```
 
-## Implementation Details
-This program focuses on:
-- File input/output redirection
-- Process creation and management using `fork()`
-- Interprocess communication via pipes
-- Command execution using `execve()`
-- Proper error handling and memory management
+### Text Processing
 
-### Functions used:
-- `open`, `close`, `read`, `write`
-- `malloc`, `free`
-- `perror`, `strerror`
-- `access`
-- `dup`, `dup2`
-- `execve`
-- `exit`
-- `fork`
-- `pipe`
-- `unlink`
-- `wait`, `waitpid`
+```bash
+# Count occurrences of a pattern
+./pipex infile "grep pattern" "wc -w" outfile
 
-## Bonus Features
-- Multiple pipe handling: Ability to handle any number of commands in the pipeline
-- Here_doc support: Implementation of the `<<` (heredoc) and `>>` (append) functionality
+# Equivalent shell command:
+# < infile grep pattern | wc -w > outfile
+```
+
+### Advanced Pipeline (Bonus)
+
+```bash
+# Filter and process data through multiple commands
+./pipex infile "cat -e" "grep pattern" "sort" outfile
+
+# Equivalent shell command:
+# < infile cat -e | grep pattern | sort > outfile
+```
+
+### Here Document (Bonus)
+
+```bash
+# Process input until delimiter with append output
+./pipex here_doc EOF "grep hello" "wc -l" outfile
+
+# Equivalent shell command:
+# grep hello << EOF | wc -l >> outfile
+```
+
+## Technical Details
+
+### Architecture
+
+Pipex employs a parent-child process model with the following components:
+
+- **Process Management**: Fork-based command execution
+- **Pipe Communication**: Data tunneling between processes
+- **File Redirection**: Input/output stream manipulation
+- **Error Handling**: Robust system call validation
+
+### Core Functions
+
+| Category | Functions |
+|----------|-----------|
+| File Operations | `open`, `close`, `read`, `write`, `unlink`, `access` |
+| Memory Management | `malloc`, `free` |
+| Process Control | `fork`, `execve`, `wait`, `waitpid`, `exit` |
+| Stream Manipulation | `pipe`, `dup`, `dup2` |
+| Error Handling | `perror`, `strerror` |
+
+### Implementation Highlights
+
+- Zero memory leaks through careful resource management
+- Comprehensive error handling for all system calls
+- Minimal external dependencies (libft only)
+- Follow-the-42-norm compliant code style
+
+---
+
+<div align="center">
+  <p>Developed as part of the 42 School curriculum</p>
+</div>
